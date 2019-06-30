@@ -1,0 +1,19 @@
+version: '2'
+services:
+  testnet:
+    image: darkdragon/geth-with-livepeer-protocol:pm
+    ports:
+      - 8545:8545
+      - 8546:8546
+  livepeer:
+    build: ./livepeer
+#    command: 'bash -c "devtool -svchost livepeer -endpoint http://testnet:8545 setup transcoder ; ls -la ; . run_transcoder_*.sh"'
+#    command: 'bash -c "devtool -svchost livepeer -endpoint http://testnet:8545 setup broadcaster ; ls -la ; . run_broadcaster_*.sh"'
+    command: 'bash -c "devtool -svchost livepeer -endpoint http://testnet:8545 setup transcoder ; devtool -svchost livepeer -endpoint http://testnet:8545 setup broadcaster ; ls -la ; . run_transcoder_*.sh & . run_broadcaster_*.sh"'
+    ports:
+      - 1935:1935
+      - 1936:1936
+      - 7935:7935
+      - 7936:7936
+      - 8935:8935
+      - 8936:8936
