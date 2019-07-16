@@ -1,4 +1,4 @@
-version: '2'
+version: '3.7'
 services:
   testnet:
     image: darkdragon/geth-with-livepeer-protocol:pm
