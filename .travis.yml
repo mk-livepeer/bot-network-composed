@@ -1,0 +1,14 @@
+language: ruby
+
+services:
+  - docker
+
+before_install:
+  - docker pull darkdragon/geth-with-livepeer-protocol:pm
+  - docker build -t livepeer livepeer
+  - docker run darkdragon/geth-with-livepeer-protocol:pm
+  - docker ps -a
+
+script:
+  - docker run livepeer 'bash -c "devtool -svchost livepeer -endpoint http://testnet:8545 setup transcoder ; devtool -svchost livepeer -endpoint http://testnet:8545 setup broadcaster ; ls -la ; . run_transcoder_*.sh & . run_broadcaster_*.sh"'
+#  - bundle exec rake test
