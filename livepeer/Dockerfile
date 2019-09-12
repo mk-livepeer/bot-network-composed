@@ -55,8 +55,9 @@ RUN export PATH=$HOME/compiled/bin:$PATH && \
 RUN export PATH=$HOME/compiled/bin:$PATH && \
     export PATH=/usr/local/cuda/bin:$PATH && \
     export PKG_CONFIG_PATH=$HOME/compiled/lib/pkgconfig && \
-    go get github.com/livepeer/go-livepeer/cmd/livepeer && \
-    cd "$HOME/go/src/github.com/livepeer/go-livepeer" && \
+    git clone https://github.com/livepeer/go-livepeer "$HOME/go-livepeer" && \
+    cd "$HOME/go-livepeer" && \
+    go mod download && \
     go build ./cmd/livepeer/livepeer.go && \
     go build ./cmd/devtool/devtool.go
 
@@ -84,8 +85,8 @@ RUN apt-get update && apt-get dist-upgrade -y && \
 # identical at the start of each image build
 
 COPY --from=builder /usr/local/lib/* /usr/local/lib/
-COPY --from=builder /root/go/src/github.com/livepeer/go-livepeer/devtool /usr/local/bin/
-COPY --from=builder /root/go/src/github.com/livepeer/go-livepeer/livepeer /usr/local/bin/
+COPY --from=builder /root/go-livepeer/devtool /usr/local/bin/
+COPY --from=builder /root/go-livepeer/livepeer /usr/local/bin/
 
 RUN ln -s /usr/local/bin/livepeer /
 
