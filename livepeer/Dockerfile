@@ -85,6 +85,9 @@ RUN apt-get update && apt-get dist-upgrade -y && \
 # we save time and disk space by keeping the common parts of each stage
 # identical at the start of each image build
 
+# this is needed to access GPU inside Docker Swarm
+ENV NVIDIA_DRIVER_CAPABILITIES=all
+
 COPY --from=builder /usr/local/lib/* /usr/local/lib/
 COPY --from=builder /root/go-livepeer/devtool /usr/local/bin/
 COPY --from=builder /root/go-livepeer/livepeer /usr/local/bin/
