@@ -1,7 +1,8 @@
 # build stage
 FROM nvidia/cuda:10.1-devel-ubuntu18.04 as builder
 
-RUN apt-get update && apt-get dist-upgrade -y && \
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && apt-get dist-upgrade -y && \
     apt-get install software-properties-common -y && \
     add-apt-repository ppa:longsleep/golang-backports && \
     apt-get update && apt-get dist-upgrade -y && \
